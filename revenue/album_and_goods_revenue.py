@@ -2,17 +2,17 @@ import pandas as pd
 
 from dataclasses import dataclass
 from datetime import datetime
-from revenue.abstract_revenue import AbstractRevenue
+from revenue.abstract_excel_interchangable import AbstractExcelInterchangable
 
 
 @dataclass
-class AlbumAndGoodsRevenue(AbstractRevenue):
+class AlbumAndGoodsRevenue(AbstractExcelInterchangable):
     sales_date: datetime  # 매출일자
     slip_id: str  # 전표번호
     account: str  # 매출처
     main_category: str  # 대분류
     product_id: str  # 품목
-    yg_product_id: str  # 변환코드
+    yg_product_id: str  # 관리코드
     product_name: str  # 품목명
     product_type: str  # 세부규격
     product_group: str  # 품목군 artist
@@ -50,13 +50,13 @@ class AlbumAndGoodsRevenue(AbstractRevenue):
 
     @classmethod
     def get_columns(cls):
-        return ['매출일자', '전표번호', '매출처', '대분류', '품목', '변환코드', '품목명', '세부규격', '품목군', '규격', '정산대상여부', '매출수량', '매출금액',
+        return ['매출일자', '전표번호', '매출처', '대분류', '품목', '관리코드', '품목명', '세부규격', '품목군', '규격', '정산대상여부', '매출수량', '매출금액',
                 '출고단가', '출고가합계', '공급가액', '부가세', '공급대가']
 
     @classmethod
     def adapt_data_frame_element(cls, element, default_date):
         sales_date = super().default_if_invalid_datetime(str(element['매출일자']), '%Y/%m/%d', default_date)
         return AlbumAndGoodsRevenue(sales_date, element['전표번호'], element['매출처'], element['대분류'], element['품목'],
-                                    element['변환코드'], element['품목명'], element['세부규격'], element['품목군'], element['규격'],
+                                    element['관리코드'], element['품목명'], element['세부규격'], element['품목군'], element['규격'],
                                     element['정산대상여부'], element['매출수량'], element['매출금액'], element['출고단가'],
                                     element['출고가합계'], element['공급가액'], element['부가세'], element['공급대가'])

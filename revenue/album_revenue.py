@@ -2,11 +2,11 @@ import pandas as pd
 
 from dataclasses import dataclass
 from datetime import datetime
-from revenue.abstract_revenue import AbstractRevenue
+from revenue.abstract_excel_interchangable import AbstractExcelInterchangable
 
 
 @dataclass
-class AlbumRevenue(AbstractRevenue):
+class AlbumRevenue(AbstractExcelInterchangable):
     registered_date: datetime  # 일자
     company_code: str  # ccode
     business_registration_number: str  # 사업자번호
@@ -65,7 +65,7 @@ class AlbumRevenue(AbstractRevenue):
         ordered_date_time = super().default_if_invalid_datetime(str(element['Time']), '%Y-%m-%d %H:%M', default_date)
         company_code = str(element['ccode']).zfill(6)
         return AlbumRevenue(registered_date_time, company_code, element['사업자번호'], element['거래처'], element['창고명'],
-                            element['적재위치'], element['기본코드'], element['관리코드'], element['바코드'], element['상 품 명'],
+                            element['적재위치'], element['기본코드'], str(element['관리코드']), element['바코드'], element['상 품 명'],
                             element['규 격'], element['단위'], element['수량'], element['단 가'], element['공급가액'],
                             element['부가세'],
                             element['할 인'], element['합계액'], ordered_date_time, element['ROWKEY'], element['비고'])

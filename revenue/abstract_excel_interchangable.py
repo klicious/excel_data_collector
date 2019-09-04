@@ -2,7 +2,7 @@ from datetime import datetime
 from abc import ABCMeta, abstractmethod
 
 
-class AbstractRevenue(metaclass=ABCMeta):
+class AbstractExcelInterchangable(metaclass=ABCMeta):
 
     @abstractmethod
     def adapt_to_data_frame_element(self):
