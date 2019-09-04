@@ -14,8 +14,7 @@ def _reformat_management_code(_management_code):
         _management_code = '0'
     if _management_code is None:
         _management_code = '0'
-    _management_code = str(_management_code).zfill(7)
-    return _management_code
+    return str(_management_code).zfill(7)
 
 
 @dataclass
@@ -41,8 +40,8 @@ class YgRevenue(AbstractExcelInterchangable):
 
     @classmethod
     def adapt_data_frame_element(cls, element, default_date):
-        return YgRevenue(str(element['매출일자']), str(element['관리코드']), str(element['상품명']),
-                         str(element['아티스트']), element['수량'], element['단가'], element['매출액'])
+        return YgRevenue(element['매출일자'].astype(str), element['관리코드'].astype(str), element['상품명'].astype(str),
+                         element['아티스트'].astype(str), element['수량'], element['단가'], element['매출액'])
 
     @classmethod
     def get_columns(cls):
@@ -50,22 +49,22 @@ class YgRevenue(AbstractExcelInterchangable):
 
     @staticmethod
     def adapt_album_revenue(_revenue: AlbumRevenue):
-        _revenue_date = _revenue.registered_date.strftime('%Y%m')
-        _management_code = _reformat_management_code(_revenue.management_code)
+        _revenue_date: str = _revenue.registered_date.strftime('%Y%m')
+        _management_code: str = _reformat_management_code(_revenue.management_code)
         return YgRevenue(_revenue_date, _management_code, _revenue.product_name, _revenue.product_specification,
                          _revenue.quantity, _revenue.unit_price, _revenue.total_amount)
 
     @staticmethod
     def adapt_goods_revenue(_revenue: GoodsRevenue):
-        _revenue_date = _revenue.registered_date.strftime('%Y%m')
-        _management_code = _reformat_management_code(_revenue.management_code)
+        _revenue_date: str = _revenue.registered_date.strftime('%Y%m')
+        _management_code: str = _reformat_management_code(_revenue.management_code)
         return YgRevenue(_revenue_date, _management_code, _revenue.product_name, _revenue.product_specification,
                          _revenue.quantity, _revenue.unit_price, _revenue.total_amount)
 
     @staticmethod
     def adapt_album_and_goods_revenue(_revenue: AlbumAndGoodsRevenue):
-        _revenue_date = _revenue.sales_date.strftime('%Y%m')
-        _management_code = _reformat_management_code(_revenue.product_id)
+        _revenue_date: str = _revenue.sales_date.strftime('%Y%m')
+        _management_code: str = _reformat_management_code(_revenue.yg_product_id)
         return YgRevenue(_revenue_date, _revenue.yg_product_id, _revenue.product_name, _revenue.product_specification,
                          _revenue.sales_quantity, _revenue.shipping_unit_price, _revenue.sales_amount)
 

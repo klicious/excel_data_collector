@@ -33,7 +33,7 @@ class AlbumAndGoodsRevenue(AbstractExcelInterchangable):
             "매출처": [self.account],
             "대분류": [self.main_category],
             "품목": [self.product_id],
-            "변환코드": [self.yg_product_id],
+            "관리코드": [self.yg_product_id],
             "품목명": [self.product_name],
             "세부규격": [self.product_type],
             "품목군": [self.product_group],
