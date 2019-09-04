@@ -83,9 +83,14 @@ for _goods in goods_revenues:
 for _album_and_goods in album_and_goods_revenues:
     yg_revenues.append(YgRevenue.adapt_album_and_goods_revenue(_album_and_goods))
 
-unique_management_codes = {_revenue.management_code for _revenue in yg_revenues}
+unique_management_codes: List[str] = {_revenue.management_code for _revenue in yg_revenues}
 for _code in unique_management_codes:
-    print(_code)
+    if type(_code) is not str:
+        print(str(type(_code)) + " is type of " + str(_code))
+unique_revenue_dates: List[str] = {_revenue.revenue_date for _revenue in yg_revenues}
+for _date in unique_revenue_dates:
+    if type(_date) is not str:
+        print(str(type(_date)) + " is type of " + str(_date))
 
 # 상품 정보 조회 및 주입
 products: List[Product] = collect_product_information_data()

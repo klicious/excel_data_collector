@@ -1,4 +1,5 @@
 import pandas as pd
+import math
 
 from dataclasses import dataclass
 
@@ -9,6 +10,8 @@ from revenue.goods_revenue import GoodsRevenue
 
 
 def _reformat_management_code(_management_code):
+    if type(_management_code) is float and math.isnan(_management_code):
+        _management_code = '0'
     if _management_code is None:
         _management_code = '0'
     _management_code = str(_management_code).zfill(7)
